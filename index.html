@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Best EOS Finder</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="chem-icon"><i class="fas fa-flask"></i></div>
+    <h2>Best EOS Finder</h2>
+    <input type="text" id="fluidInput" placeholder="Enter fluid name...">
+    <button onclick="checkEOS()">Check EOS</button>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    function checkEOS() {
+      const fluid = document.getElementById("fluidInput").value.trim().toLowerCase();
+      const resultBox = document.getElementById("resultBox");
+
+      if (!fluid) {
+        resultBox.innerText = "Please enter a fluid name.";
+        return;
+      }
+
+      const data = deviationData[fluid];
+      if (!data) {
+        resultBox.innerText = `No data found for '${fluid}'.`;
+        return;
+      }
+
+      let bestEOS = "";
+      let minVal = Infinity;
+
+      for (const eos in data) {
+        if (data[eos] < minVal) {
+          minVal = data[eos];
+          bestEOS = eos;
+        }
+      }
+
+      resultBox.innerText = `Best EOS for '${fluid}': ${bestEOS} (Deviation = ${minVal.toFixed(2)}%)`;
+    }
+  </script>
+</body>
+</html>
