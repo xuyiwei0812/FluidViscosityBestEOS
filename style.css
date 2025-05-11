@@ -55,3 +55,22 @@ button:hover {
   color: #444;
   font-weight: bold;
 }
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.result-table th, .result-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
