@@ -14,6 +14,8 @@
     <input type="text" id="fluidInput" placeholder="Enter fluid name...">
     <button onclick="checkEOS()">Check EOS</button>
     <div class="result" id="resultBox"></div>
+
+    <div id="tableContainer" style="margin-top: 30px;"></div>
   </div>
 
   <script src="data.js"></script>
@@ -21,6 +23,10 @@
     function checkEOS() {
       const fluid = document.getElementById("fluidInput").value.trim().toLowerCase();
       const resultBox = document.getElementById("resultBox");
+      const tableContainer = document.getElementById("tableContainer");
+
+      resultBox.innerText = "";
+      tableContainer.innerHTML = "";
 
       if (!fluid) {
         resultBox.innerText = "Please enter a fluid name.";
@@ -33,9 +39,9 @@
         return;
       }
 
+      // Find best EOS
       let bestEOS = "";
       let minVal = Infinity;
-
       for (const eos in data) {
         if (data[eos] < minVal) {
           minVal = data[eos];
@@ -44,6 +50,19 @@
       }
 
       resultBox.innerText = `Best EOS for '${fluid}': ${bestEOS} (Deviation = ${minVal.toFixed(2)}%)`;
+
+      // Create table
+      const table = document.createElement("table");
+      table.className = "result-table";
+      const header = table.insertRow();
+      header.innerHTML = "<th>EOS</th><th>Deviation (%)</th>";
+
+      for (const eos in data) {
+        const row = table.insertRow();
+        row.innerHTML = `<td>${eos}</td><td>${data[eos].toFixed(2)}</td>`;
+      }
+
+      tableContainer.appendChild(table);
     }
   </script>
 </body>
